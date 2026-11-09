@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#24143b">
+  <meta name="description" content="Un pequeño detalle de amistad: una violeta para alguien especial.">
+  <title>Un pequeño detalle para ti 💜</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #322343;
+      --muted: #766b80;
+      --purple: #8052b8;
+      --deep: #24143b;
+      --lilac: #eee4f7;
+      --paper: #fffaf5;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      padding: max(22px, env(safe-area-inset-top)) 18px max(26px, env(safe-area-inset-bottom));
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      font-family: ui-rounded, "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 15% 12%, rgba(175, 133, 217, .35), transparent 34%),
+        radial-gradient(ellipse at 88% 85%, rgba(125, 91, 165, .3), transparent 32%),
+        linear-gradient(145deg, #211333 0%, #38204f 48%, #20142f 100%);
+    }
+    .glow {
+      position: fixed; width: 250px; height: 250px; border-radius: 50%;
+      background: rgba(204, 171, 235, .12); filter: blur(55px); pointer-events: none;
+    }
+    .glow.one { top: 4%; right: -110px; }
+    .glow.two { bottom: 3%; left: -120px; }
+    .page { width: min(100%, 520px); position: relative; z-index: 1; }
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px 23px 25px;
+      border: 1px solid rgba(255,255,255,.66);
+      border-radius: 30px;
+      background: linear-gradient(160deg, rgba(255, 252, 248, .98), rgba(246, 237, 250, .97));
+      box-shadow: 0 24px 80px rgba(8, 3, 18, .34), inset 0 1px 0 #fff;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin: 0 auto 17px; padding: 8px 13px;
+      border-radius: 999px; background: #eee3f6; color: #704894;
+      font-size: 10px; font-weight: 800; letter-spacing: .15em;
+    }
+    .eyebrow::before, .eyebrow::after { content: "✦"; font-size: 10px; color: #a783c5; }
+    h1 {
+      max-width: 390px; margin: 0 auto 9px;
+      color: #352443; font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 9vw, 48px); font-weight: 500; line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+    .intro {
+      max-width: 340px; margin: 0 auto;
+      color: var(--muted); font-size: 14px; line-height: 1.65;
+    }
+    .flower-wrap {
+      position: relative; width: min(100%, 330px); aspect-ratio: 1 / 1;
+      margin: 8px auto -1px; display: grid; place-items: center;
+    }
+    .flower-wrap::before {
+      content: ""; position: absolute; width: 76%; height: 76%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(189, 157, 218, .24), rgba(189,157,218,0) 68%);
+    }
+    .flower { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 12px 11px rgba(68, 37, 83, .13)); }
+    .stem { fill: none; stroke: #648b59; stroke-width: 8; stroke-linecap: round; }
+    .leaf { fill: url(#leafGradient); stroke: #608452; stroke-width: 1.5; }
+    .petal {
+      fill: url(#petalGradient); stroke: rgba(111, 66, 155, .28); stroke-width: 1.3;
+      transform-box: view-box; transform-origin: 160px 143px;
+      opacity: .96; transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .8s ease;
+    }
+    .petal.p1 { transform: rotate(0deg) scale(.88); }
+    .petal.p2 { transform: rotate(72deg) scale(.88); }
+    .petal.p3 { transform: rotate(144deg) scale(.88); }
+    .petal.p4 { transform: rotate(216deg) scale(.88); }
+    .petal.p5 { transform: rotate(288deg) scale(.88); }
+    .flower.bloom .petal { filter: brightness(1.08); }
+    .flower.bloom .petal.p1 { transform: rotate(0deg) scale(1); }
+    .flower.bloom .petal.p2 { transform: rotate(72deg) scale(1); }
+    .flower.bloom .petal.p3 { transform: rotate(144deg) scale(1); }
+    .flower.bloom .petal.p4 { transform: rotate(216deg) scale(1); }
+    .flower.bloom .petal.p5 { transform: rotate(288deg) scale(1); }
+    .flower-center { fill: url(#centerGradient); stroke: #d5a64d; stroke-width: 2; }
+    .sparkle { fill: #bd91d8; opacity: .72; transform-origin: center; animation: twinkle 3s ease-in-out infinite; }
+    .sparkle.s2 { animation-delay: .7s; }
+    .sparkle.s3 { animation-delay: 1.4s; }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      min-height: 48px; padding: 0 21px; border: 0; border-radius: 999px;
+      color: white; background: linear-gradient(135deg, #8e61bd, #68418e);
+      box-shadow: 0 8px 18px rgba(103, 65, 142, .25);
+      font: inherit; font-size: 13px; font-weight: 750; cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .button:active { transform: scale(.97); }
+    .button:focus-visible { outline: 3px solid #c9a9e3; outline-offset: 4px; }
+    .button .star { font-size: 16px; }
+    .divider { width: 46px; height: 1px; margin: 27px auto 22px; background: #d9c8e5; }
+    .message-label { margin: 0 0 11px; color: #8865a4; font-size: 10px; font-weight: 800; letter-spacing: .18em; }
+    blockquote {
+      margin: 0; padding: 0 3px; color: #4b3a57;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(17px, 4.7vw, 20px); line-height: 1.65;
+    }
+    .signoff { margin: 17px 0 0; color: #896c9b; font-size: 12px; font-weight: 650; }
+    .footer { margin: 17px 0 0; color: rgba(255,255,255,.67); text-align: center; font-size: 11px; letter-spacing: .04em; }
+    .footer span { color: #d8b9ef; }
+    @keyframes twinkle { 0%,100% { opacity: .35; transform: scale(.8) rotate(0); } 50% { opacity: 1; transform: scale(1.18) rotate(18deg); } }
+    @media (min-width: 600px) {
+      body { padding-top: 36px; padding-bottom: 36px; }
+      .card { padding: 37px 42px 31px; }
+      .flower-wrap { width: 340px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one" aria-hidden="true"></div>
+  <div class="glow two" aria-hidden="true"></div>
+  <main class="page">
+    <section class="card" aria-labelledby="title">
+      <p class="eyebrow">UN PEQUEÑO DETALLE DE AMISTAD</p>
+      <h1 id="title">Hoy te toca<br>una flor 💜</h1>
+      <p class="intro">Porque las personas especiales también merecen que alguien se acuerde de ellas.</p>
+
+      <div class="flower-wrap">
+        <svg class="flower" id="flower" viewBox="0 0 320 320" role="img" aria-label="Ilustración de una violeta morada con tallo y hojas">
+          <defs>
+            <linearGradient id="petalGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#c7a3e8"/>
+              <stop offset=".48" stop-color="#9567c4"/>
+              <stop offset="1" stop-color="#70449e"/>
+            </linearGradient>
+            <linearGradient id="leafGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#a9c58c"/>
+              <stop offset="1" stop-color="#5d8755"/>
+            </linearGradient>
+            <radialGradient id="centerGradient">
+              <stop offset="0" stop-color="#ffe7a0"/>
+              <stop offset="1" stop-color="#d6a84f"/>
+            </radialGradient>
+          </defs>
+          <path class="stem" d="M158 145 C158 192 169 238 162 291"/>
+          <path class="leaf" d="M164 235 C190 205 225 211 228 235 C208 258 181 254 164 235Z"/>
+          <path class="leaf" d="M161 266 C137 235 105 239 101 261 C119 283 145 282 161 266Z"/>
+          <path d="M164 235 Q190 233 218 235 M161 266 Q132 261 111 261" fill="none" stroke="#d1dfb4" stroke-width="1.7" opacity=".8"/>
+          <path class="petal p1" d="M160 146 C128 124 124 88 160 39 C196 88 192 124 160 146Z"/>
+          <path class="petal p2" d="M160 146 C128 124 124 88 160 39 C196 88 192 124 160 146Z"/>
+          <path class="petal p3" d="M160 146 C128 124 124 88 160 39 C196 88 192 124 160 146Z"/>
+          <path class="petal p4" d="M160 146 C128 124 124 88 160 39 C196 88 192 124 160 146Z"/>
+          <path class="petal p5" d="M160 146 C128 124 124 88 160 39 C196 88 192 124 160 146Z"/>
+          <circle class="flower-center" cx="160" cy="143" r="20"/>
+          <circle cx="154" cy="138" r="3" fill="#fff2c8" opacity=".8"/>
+          <path class="sparkle s1" d="M58 98 L62 109 L73 113 L62 117 L58 128 L54 117 L43 113 L54 109Z"/>
+          <path class="sparkle s2" d="M253 134 L256 142 L264 145 L256 148 L253 156 L250 148 L242 145 L250 142Z"/>
+          <path class="sparkle s3" d="M228 54 L231 61 L238 64 L231 67 L228 74 L225 67 L218 64 L225 61Z"/>
+        </svg>
+      </div>
+
+      <button class="button" id="bloomButton" type="button" aria-controls="flower">
+        <span class="star" aria-hidden="true">✦</span>
+        Haz florecer el detalle
+      </button>
+
+      <div class="divider" aria-hidden="true"></div>
+      <p class="message-label">UN MENSAJE PARA TI</p>
+      <blockquote>“Aunque no sea la persona de la que esperas esto hoy, te envio esto para que no te sientas sola en este día algo importante para tí. De alguien que te aprecia mazo”</blockquote>
+      <p class="signoff">Con mucho cariño y amistad 💜</p>
+    </section>
+    <p class="footer">Un ramito de violetas <span>✦</span> porque sí, porque te lo mereces.</p>
+  </main>
+  <script>
+    const flower = document.getElementById('flower');
+    const button = document.getElementById('bloomButton');
+    button.addEventListener('click', () => {
+      flower.classList.remove('bloom');
+      // Reinicia la transición para que el gesto pueda repetirse.
+      void flower.getBoundingClientRect();
+      flower.classList.add('bloom');
+      button.innerHTML = '<span class="star" aria-hidden="true">✦</span> ¡Que nunca te falten flores!';
+    });
+  </script>
+</body>
+</html>
